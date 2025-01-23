@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
-
+import './app.css';
 
 const images = [
   'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80',
@@ -99,29 +99,94 @@ function App() {
     }));
   };
 
+    const [isheaderVisible, setIsheaderVisible] = useState(true); // For sticky header animation
+    const [menuOpen, setMenuOpen] = useState(false); // For hamburger menu
+  
+    const toggleMenu = () => {
+      setMenuOpen(!menuOpen);
+    };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className={`bg-white shadow-md fixed w-full z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}>
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="w-8 h-8 text-purple-600" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Trichoderm clinic
-              </span>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#home" className="text-gray-600 hover:text-purple-600 transition-colors">Home</a>
-              <a href="#services" className="text-gray-600 hover:text-purple-600 transition-colors">Services</a>
-              <a href="#about" className="text-gray-600 hover:text-purple-600 transition-colors">About</a>
-              <a href="#contact" className="text-gray-600 hover:text-purple-600 transition-colors">Contact</a>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <header
+  className={`bg-white shadow-md fixed w-full z-50 transition-transform duration-800 ${
+    isVisible ? "translate-y-0" : "-translate-y-full"
+  }`}
+>
+  <div className="container mx-auto px-6 py-4">
+    <div className="flex items-center justify-between">
+      {/* Logo Section */}
+      <div className="flex items-center space-x-2">
+        <Sparkles className="w-8 h-8 text-purple-600" />
+        <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          Trichoderm Clinic
+        </span>
+      </div>
+
+      {/* Hamburger Menu Button */}
+      <div className="md:hidden ml-auto md:juftify-content"> {/* Added ml-auto for alignment */}
+        <button
+          onClick={toggleMenu}
+          className="text-gray-600 focus:outline-none"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={
+                menuOpen
+                  ? "M6 18L18 6M6 6l12 12" // "X" icon
+                  : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
+              }
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Navigation Links */}
+      <nav
+        className={`${
+          menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        } md:flex md:max-h-none md:items-center md:justify-end md:opacity-100 overflow-hidden transition-all duration-500 ease-in-out space-x-1`}
+      >
+        <a
+          href="#home"
+          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
+        >
+          Home
+        </a>
+        <a
+          href="#services"
+          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
+        >
+          Services
+        </a>
+        <a
+          href="#about"
+          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
+        >
+          About
+        </a>
+        <a
+          href="#contact"
+          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
+        >
+          Contact
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
 
       {/* Hero Section with Slider */}
       <section id="home" className="pt-20">
@@ -147,7 +212,7 @@ function App() {
                   Transform Your Look
                 </h1>
                 <p className="text-xl text-white/90 mb-8">
-                  Experience world-class hair and skin treatments with cutting-edge technology
+                  Experience world-className hair and skin treatments with cutting-edge technology
                 </p>
                 <button 
                   onClick={() => setIsModalOpen(true)}
@@ -180,10 +245,121 @@ function App() {
             ))}
           </div>
         </div>
+      </section> 
+
+      {/*how-to-section
+      <section>
+            
+      <div className="containerbox">
+        <div className="A1">
+            <h4>
+              <b>How it Works</b> 
+            </h4>
+            <h2>
+              <b>
+                Simple Step to Get Beautiful Skin
+              </b>
+            </h2>
+
+        </div>
+        <div className="A2">
+          <img src="img-03.png" alt="get a beautiful skin" />
+        </div>
+        <div className="A3">
+            <div className="steps">
+              <h4><b>Make a Decision</b></h4>
+
+            </div>
+            <div className="steps">
+            <h4><b>Schedule a Appointment</b></h4>
+            </div>
+            <div className="steps">
+            <h4><b>Transformation Completed</b></h4>
+            </div>
+        </div>
+        <div className="A4"></div>
+      </div>
+
+
       </section>
 
+      */}
+
+<section className="flex flex-row items-center gap-8 p-8 bg-gray-50">
+  {/* Left Section: Text and Boxes */}
+  <div className="w-1/2 space-y-6">
+    {/* Headings */}
+    <div>
+      <h2 className="text-3xl font-bold">How It Works</h2>
+      <h3 className="text-xl text-gray-600">Simple Step to Get Beautiful Skin</h3>
+    </div>
+    {/* Steps */}
+    <div className="space-y-4" >
+      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
+        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">1</span>
+        <div>
+          <h4 className="font-semibold">Make A Decision</h4>
+          <p className="text-sm text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
+        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">2</span>
+        <div>
+          <h4 className="font-semibold">Schedule An Appointment</h4>
+          <p className="text-sm text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
+        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">3</span>
+        <div>
+          <h4 className="font-semibold">Transformation Completed</h4>
+          <p className="text-sm text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section: Images */}
+  <div className="relative w-1/2">
+    <div className="absolute -top-8 left-10 text-pink-500 font-semibold">
+    <img
+        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-03.png"
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-auto -z-10"
+      />
+    </div>
+    <div className="relative">
+      <img
+        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img02.jpg"
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-auto -z-10"
+      />
+      <img
+        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img01.jpg"
+        alt="Main"
+        className="w-4/5 ml-auto"
+      />
+      <img
+        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-06.png"
+        alt="Overlay"
+        className="absolute bottom-0 left-100 w-1/3" 
+        id="leaf"
+      />
+    </div>
+  </div>
+</section>
+
+      
+      
+
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white" >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center">
