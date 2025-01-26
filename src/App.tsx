@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import './app.css';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+
 
 const images = [
   'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80',
   'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=1600&q=80',
-  'https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?auto=format&fit=crop&w=1600&q=80',
+  '//cura.radiantthemes.com/wp-content/uploads/revslider/slider-24/banner02-img.png?auto=format&fit=crop&w=1600&q=80',
 ];
 
 const services = [
@@ -91,6 +94,19 @@ function App() {
     }
   };
 
+    const scrollCarousel = (direction: string) => {
+      const container = document.getElementById('carousel');
+      if (container) {  // Check if the container is not null
+        const scrollAmount = container.scrollWidth / 4; // Adjust scroll amount
+        if (direction === 'left') {
+          container.scrollLeft -= scrollAmount;
+        } else {
+          container.scrollLeft += scrollAmount;
+        }
+      }
+    };
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -101,90 +117,257 @@ function App() {
 
     const [isheaderVisible, setIsheaderVisible] = useState(true); // For sticky header animation
     const [menuOpen, setMenuOpen] = useState(false); // For hamburger menu
-  
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+
     const toggleMenu = () => {
       setMenuOpen(!menuOpen);
     };
+
+  
+    // const ImageCarousel = (direction: string) => {
+    //   const carouselRef = useRef<HTMLDivElement>(null);
+    
+    //   // Duplicate items for infinite scroll
+    //   const images = [
+    //     { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg', text: 'Cleaning' },
+    //     { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/08-1-1.jpg', text: 'Acne Scanning' },
+    //     { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg', text: 'Face perfection' },
+    //     { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg', text: 'Hair Treatment' },
+    //     { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg', text: 'Hair moisturizing' },
+    //   ];
+    //   const duplicatedImages = [...images, ...images]; // Duplicate array for seamless scrolling
+    
+    //   const scrollCarousel = (direction: string) => {
+    //     const container = carouselRef.current;
+    //     if (!container) return;
+    
+    //     const scrollAmount = container.clientWidth;
+    //     if (direction === 'left') {
+    //       container.scrollLeft -= scrollAmount;
+    //       if (container.scrollLeft <= 0) {
+    //         container.scrollLeft = container.scrollWidth / 2;
+    //       }
+    //     } else {
+    //       container.scrollLeft += scrollAmount;
+    //       if (container.scrollLeft >= container.scrollWidth / 2) {
+    //         container.scrollLeft = 0;
+    //       }
+    //     }
+    //   };
+    
+    //   useEffect(() => {
+    //     const container = carouselRef.current;
+    //     if (!container) return;
+    
+    //     const handleScroll = () => {
+    //       // Reset scroll position for infinite scroll illusion
+    //       if (container.scrollLeft >= container.scrollWidth / 2) {
+    //         container.scrollLeft = 0;
+    //       } else if (container.scrollLeft <= 0) {
+    //         container.scrollLeft = container.scrollWidth / 2;
+    //       }
+    //     };
+    
+    //     container.addEventListener('scroll', handleScroll);
+    
+    //     return () => {
+    //       container.removeEventListener('scroll', handleScroll);
+    //     };
+    //   }, []);
+
+
+    // }
+ 
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header
-  className={`bg-white shadow-md fixed w-full z-50 transition-transform duration-800 ${
-    isVisible ? "translate-y-0" : "-translate-y-full"
-  }`}
->
-  <div className="container mx-auto px-6 py-4">
-    <div className="flex items-center justify-between">
-      {/* Logo Section */}
-      <div className="flex items-center space-x-2">
-        <Sparkles className="w-8 h-8 text-purple-600" />
-        <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          Trichoderm Clinic
-        </span>
-      </div>
-
-      {/* Hamburger Menu Button */}
-      <div className="md:hidden ml-auto md:juftify-content"> {/* Added ml-auto for alignment */}
-        <button
-          onClick={toggleMenu}
-          className="text-gray-600 focus:outline-none"
+          className={`bg-white shadow-md fixed w-full z-50 transition-transform duration-800 ${
+            isVisible ? "translate-y-0" : "-translate-y-full"
+          }`}
         >
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              {/* Logo Section */}
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-8 h-8 text-purple-600" />
+                <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Trichoderm Clinic
+                </span>
+              </div>
+
+              {/* Hamburger Menu Button 
+              <div className="block md:hidden ml-auto" id="menuToggle">
+              
+                <button
+                  onClick={toggleMenu}
+                  className="text-gray-600 focus:outline-none"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d={
+                        menuOpen
+                          ? "M6 18L18 6M6 6l12 12" // "X" icon
+                          : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
+                      }
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              */}
+
+      {/* Navigation Links */}
+      
+
+      <nav className="border-gray-200">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        {/* Hamburger Menu Button */}
+        <button
+          data-collapse-toggle="navbar-dropdown"
+          type="button"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-700 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          aria-controls="navbar-dropdown"
+          aria-expanded="false"
+        >
+          <span className="sr-only">Open main menu</span>
           <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+            className="w-5 h-5"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
           >
             <path
+              stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
-              d={
-                menuOpen
-                  ? "M6 18L18 6M6 6l12 12" // "X" icon
-                  : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
-              }
+              strokeWidth="2"
+              d="M1 1h15M1 7h15M1 13h15"
             />
           </svg>
         </button>
-      </div>
 
-      {/* Navigation Links */}
-      <nav
-        className={`${
-          menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        } md:flex md:max-h-none md:items-center md:justify-end md:opacity-100 overflow-hidden transition-all duration-500 ease-in-out space-x-1`}
-      >
-        <a
-          href="#home"
-          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
-        >
-          Home
-        </a>
-        <a
-          href="#services"
-          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
-        >
-          Services
-        </a>
-        <a
-          href="#about"
-          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
-        >
-          About
-        </a>
-        <a
-          href="#contact"
-          className="block text-gray-600 hover:text-purple-600 transition-colors px-6 py-3 md:py-0"
-        >
-          Contact
-        </a>
-      </nav>
+        {/* Navigation */}
+        <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-200 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            {/* Home */}
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0"
+                aria-current="page"
+              >
+                Home
+              </a>
+            </li>
+
+            {/* Dropdown */}
+            <li className="relative">
+              <button
+                id="dropdownNavbarLink"
+                className="flex items-center justify-between w-full py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0 md:w-auto"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                Services
+                <svg
+                  className="w-2.5 h-2.5 ms-2.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+
+              {/* Dropdown Menu */}
+              <div
+                id="dropdownNavbar"
+                className={`${
+                  dropdownOpen ? "block" : "hidden"
+                } z-10 font-normal bg-white divide-y divide-gray-200 rounded-lg shadow-sm w-44 absolute top-full left-0`}
+              >
+                <ul
+                  className="py-2 text-sm text-gray-700"
+                  aria-labelledby="dropdownLargeButton"
+                >
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-gray-900"
+                    >
+                      Hair Transplant
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-gray-900"
+                    >
+                      Hair Treatment
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-gray-900"
+                    >
+                      Skin Treatment
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:text-gray-900"
+                    >
+                      Consultation
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            {/* Contact */}
+            <li>
+              <a
+                href="#contact"
+                className="block py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
     </div>
   </div>
-</header>
+      </header> 
+
+
+      
+
 
 
 
@@ -226,8 +409,75 @@ function App() {
         </div>
       </section>
 
+
+      {/* Improve look section */}
+      <section className='bg-white'>
+      <div className="w-full py-8">
+        <h2 className="text-3xl font-bold text-center mb-6">Improve looks</h2>
+        <h4 className="text-3xl font-bold text-center mb-6">Discover the new you</h4>
+
+        <div className="relative flex items-center justify-center">
+          
+          
+
+          <button type="button" onClick={() => scrollCarousel('left')} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span className="sr-only">Previous</span>
+        </span>
+    </button>
+
+          <div
+            id="carousel"
+            className="flex space-x-4 overflow-x-hidden scrollbar-hide px-6"
+          >
+            {[
+              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg', text: 'Cleaning' },
+              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/08-1-1.jpg', text: 'Acne Scanning' },
+              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg', text: 'Face perfection' },
+              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg', text: 'Hair Treatment' },
+              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg', text: 'Hair moisturizing' },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="imgcontainer min-w-[300px] flex flex-col items-center bg-white shadow-lg rounded-lg"
+              >
+                <img
+                  src={item.src}
+                  alt={`Image ${index + 1}`}
+                  className="rounded-t-lg w-full object-cover h-78"
+                />
+                <div className="imgcentered p-4 text-center text-sm font-medium text-white-700">
+                  {item.text}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          
+
+          <button type="button" onClick={() => scrollCarousel('right')} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span className="sr-only">Next</span>
+        </span>
+    </button>
+        </div>
+      </div>
+    </section>
+         
+
+
+
+
+
+
       {/* Services Section */}
-      <section id="services" className="py-20 bg-white">
+      <section id="services" className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -247,47 +497,44 @@ function App() {
         </div>
       </section> 
 
-      {/*how-to-section
-      <section>
-            
-      <div className="containerbox">
-        <div className="A1">
-            <h4>
-              <b>How it Works</b> 
-            </h4>
-            <h2>
-              <b>
-                Simple Step to Get Beautiful Skin
-              </b>
-            </h2>
 
-        </div>
-        <div className="A2">
-          <img src="img-03.png" alt="get a beautiful skin" />
-        </div>
-        <div className="A3">
-            <div className="steps">
-              <h4><b>Make a Decision</b></h4>
+      {/* Expirience Statistics */}
+      <div className="bg-white  flex justify-around algin-items:center text-grey-50 text-xl">
 
-            </div>
-            <div className="steps">
-            <h4><b>Schedule a Appointment</b></h4>
-            </div>
-            <div className="steps">
-            <h4><b>Transformation Completed</b></h4>
-            </div>
-        </div>
-        <div className="A4"></div>
+    <div className="ml-60 mt-10 hover-div ">
+      2501 <br></br>
+      <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
+
+       Non-Surgical
+    </div>
+    <div className=" mt-10 mb-10  hover-div ">
+      2501 <br></br>
+            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
+ 
+      Hair Trasnplant
+    </div>
+    <div className=" mt-10 mb-10  hover-div ">
+      2501 <br></br>
+            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
+
+      Hair Treatment
+    </div>
+    <div className="mr-60 mt-10 mb-10  hover-div ">
+      2501 <br></br> 
+            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
+
+      Consultation
+    </div>
+
       </div>
 
+  
 
-      </section>
-
-      */}
-
-<section className="flex flex-row items-center gap-8 p-8 bg-gray-50">
-  {/* Left Section: Text and Boxes */}
-  <div className="w-1/2 space-y-6">
+      
+      {/*How it works- Steps */}
+    <section className="flex flex-row items-center gap-8 p-8 bg-gray-50">
+    {/* Left Section: Text and Boxes */}
+    <div className="w-1/2 space-y-6">
     {/* Headings */}
     <div>
       <h2 className="text-3xl font-bold">How It Works</h2>
@@ -323,10 +570,10 @@ function App() {
         </div>
       </div>
     </div>
-  </div>
+    </div>
 
-  {/* Right Section: Images */}
-  <div className="relative w-1/2">
+    {/* Right Section: Images */}
+    <div className="relative w-1/2">
     <div className="absolute -top-8 left-10 text-pink-500 font-semibold">
     <img
         src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-03.png"
@@ -352,14 +599,14 @@ function App() {
         id="leaf"
       />
     </div>
-  </div>
-</section>
+    </div>
+    </section>
 
       
       
 
       {/* Features Section */}
-      <section className="py-20 bg-white" >
+      <section id='about' className="py-20 bg-white" >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center">
@@ -482,22 +729,159 @@ function App() {
         </div>
       )}
 
+      {/* Book appointment*/}
+      <div className="flex justify-around items-center space-x-6">
+
+        <div className='flex justify-around items-center space-x-6 m-40'>
+           {/* First Column */}
+              <div className="flex-1 ml-20 mr-0">
+                <img
+                  src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/2.png"
+                  alt="exp image"
+                  className="mb-4"
+                />
+                <img
+                  src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/call-our-clinic.png"
+                  alt="call our clinic"
+                />
+              </div>
+
+              {/* Second Column */}
+              <div className="flex-1 ml-0 text-center">
+                <div className="text-lg font-semibold">Why Choose Us</div>
+                <br />
+                <h3 className="text-2xl font-bold">Why Clients Choose Our Clinic</h3>
+                <p className="mt-2 text-gray-600">
+                  Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation. ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+                <br />
+                <p className="text-gray-600">
+                  Consequat auteirure dolor in reprehenderit in voluptate velit esse cillum dolore.
+                </p>
+              </div>
+
+              {/* Third Column */}
+              <div className="flex-1  mr-30">
+                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="serviceType"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Service Type
+                    </label>
+                    <select
+                      id="serviceType"
+                      name="serviceType"
+                      required
+                      value={formData.serviceType}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                      <option value="">Select a service</option>
+                      {serviceTypes.map((service) => (
+                        <option key={service} value={service}>
+                          {service}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={4}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      placeholder="Tell us about your concerns..."
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full py-3 px-4 rounded-md text-white font-medium transition-colors ${
+                      isSubmitting
+                        ? 'bg-purple-400 cursor-not-allowed'
+                        : 'bg-purple-600 hover:bg-purple-700'
+                    }`}
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                  </button>
+                  {submitStatus === 'success' && (
+                    <p className="text-green-600 text-center">
+                      Thank you! We'll contact you soon.
+                    </p>
+                  )}
+                  {submitStatus === 'error' && (
+                    <p className="text-red-600 text-center">
+                      Something went wrong. Please try again.
+                    </p>
+                  )}
+                </form>
+              </div>
+            </div>
+        </div>
+ 
+
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300">
-        <div className="container mx-auto px-6 py-12">
+      <footer id="contact" className="bg-gray-900 text-gray-300 ">
+        <div className="container mx-auto px-6 py-12 ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Trichoderm Centre</h3>
               <p className="text-gray-400">Your trusted partner in hair transplant and skin treatment solutions.</p>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-purple-500 transition-colors">
+                <a href="https://www.facebook.com/no1dermadoc/" className="hover:text-purple-500 transition-colors">
                   <Facebook className="w-5 h-5" />
                 </a>
-                <a href="#" className="hover:text-purple-500 transition-colors">
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a href="#" className="hover:text-purple-500 transition-colors">
+                <a href="https://www.instagram.com/trichoderm.centre/#" className="hover:text-purple-500 transition-colors">
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a href="#" className="hover:text-purple-500 transition-colors">
@@ -509,11 +893,10 @@ function App() {
             {/* Quick Links */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Quick Links</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 bg-transparent">
                 <li><a href="#home" className="hover:text-purple-500 transition-colors">Home</a></li>
                 <li><a href="#about" className="hover:text-purple-500 transition-colors">About</a></li>
                 <li><a href="#services" className="hover:text-purple-500 transition-colors">Services</a></li>
-                <li><a href="#doctors" className="hover:text-purple-500 transition-colors">Our Doctors</a></li>
                 <li><a href="#contact" className="hover:text-purple-500 transition-colors">Contact</a></li>
               </ul>
             </div>
@@ -521,7 +904,7 @@ function App() {
             {/* Services */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Services</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 bg-transparent ">
                 <li><a href="#" className="hover:text-purple-500 transition-colors">Hair Transplant</a></li>
                 <li><a href="#" className="hover:text-purple-500 transition-colors">Skin Treatment</a></li>
                 <li><a href="#" className="hover:text-purple-500 transition-colors">Hair Analysis</a></li>
@@ -532,14 +915,14 @@ function App() {
             {/* Contact Info */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Contact Info</h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 bg-transparent">
                 <li className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 mt-0.5" />
-                  <span>123 Medical Plaza, Healthcare Street</span>
+                  <span>Flat No AC, G-2, Ground Floor, Barde Complex, Katol Road, Friends Colony, Nagpur - 440013 (Behind Smart Point, Near Prime Fitness Gym)</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Phone className="w-5 h-5" />
-                  <span>+123 456 7890</span>
+                  <span>08511278315</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Mail className="w-5 h-5" />
@@ -547,7 +930,7 @@ function App() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <Clock className="w-5 h-5" />
-                  <span>Mon - Sat: 9:00 - 18:00</span>
+                  <span>Mon - Sat: 11:00 am - 7:00 pm</span>
                 </li>
               </ul>
             </div>
