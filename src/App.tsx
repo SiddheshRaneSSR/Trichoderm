@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import './app.css';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 
 const images = [
@@ -64,35 +62,32 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      // Here you would typically make an API call to your email service
-      // For demonstration, we'll simulate an API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Form submitted:', formData);
-      setSubmitStatus('success');
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setFormData({
-          name: '',
-          phone: '',
-          serviceType: '',
-          message: ''
-        });
-        setSubmitStatus('idle');
-      }, 2000);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
+  
+    const { name, phone, serviceType, message } = formData;
+    const body=`${message}\n\nService: ${serviceType}\nPhone: ${phone}\nName: ${name}`
+    
+    // Build the mailto URL
+    const mailtoURL = `mailto:info@trichoderm.com?subject=${encodeURIComponent(
+      serviceType
+    )}&body=${encodeURIComponent(
+    `${body}`
+  )}`;
+  
+    // Open the mailto link
+    window.open(mailtoURL, "_blank");
+  
+    // Close modal and reset form after triggering mailto
+    setIsModalOpen(false);
+    setFormData({
+      name: "",
+      phone: "",
+      serviceType: "",
+      message: "",
+    });
   };
+  
 
     const scrollCarousel = (direction: string) => {
       const container = document.getElementById('carousel');
@@ -184,186 +179,81 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header
-          className={`bg-white shadow-md fixed w-full z-50 transition-transform duration-800 ${
-            isVisible ? "translate-y-0" : "-translate-y-full"
-          }`}
-        >
-          <div className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              {/* Logo Section */}
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-8 h-8 text-purple-600" />
-                <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  Trichoderm Clinic
-                </span>
-              </div>
+      <header className="bg-white shadow-md fixed w-full z-50">
+      <div className="containermx-auto max-w-7xl  px-6 py-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          {/* Logo Section */}
+          <div className="flex items-center space-x-2">
+            <Sparkles className="w-8 h-8 text-purple-600" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Trichoderm Clinic
+            </span>
+          </div>
 
-              {/* Hamburger Menu Button 
-              <div className="block md:hidden ml-auto" id="menuToggle">
-              
-                <button
-                  onClick={toggleMenu}
-                  className="text-gray-600 focus:outline-none"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d={
-                        menuOpen
-                          ? "M6 18L18 6M6 6l12 12" // "X" icon
-                          : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
-                      }
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              */}
-
-      {/* Navigation Links */}
-      
-
-      <nav className="border-gray-200">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        {/* Hamburger Menu Button */}
-        <button
-          data-collapse-toggle="navbar-dropdown"
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-700 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          aria-controls="navbar-dropdown"
-          aria-expanded="false"
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
+          {/* Hamburger Menu Button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-700 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            aria-controls="navbar-dropdown"
+            aria-expanded={menuOpen}
           >
-            <path
+            <svg
+              className="w-6 h-6"
+              fill="none"
               stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </button>
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={
+                  menuOpen
+                    ? "M6 18L18 6M6 6l12 12" // "X" icon
+                    : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
+                }
+              />
+            </svg>
+          </button>
 
-        {/* Navigation */}
-        <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-200 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-            {/* Home */}
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0"
-                aria-current="page"
-              >
-                Home
-              </a>
-            </li>
-
-            {/* Dropdown */}
-            <li className="relative">
-              <button
-                id="dropdownNavbarLink"
-                className="flex items-center justify-between w-full py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0 md:w-auto"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                Services
-                <svg
-                  className="w-2.5 h-2.5 ms-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
+          {/* Navigation Links */}
+          <nav
+            className={`${
+              menuOpen ? "block" : "hidden"
+            } absolute top-full left-0 w-full bg-white z-50 md:static md:block md:w-auto`}
+            id="navbar-dropdown"
+          >
+            <ul className="flex flex-col p-4 space-y-4 md:space-y-0 md:flex-row md:space-x-8">
+              <li>
+                <a
+                  href="#"
+                  className="block text-gray-700 hover:text-gray-900"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-
-              {/* Dropdown Menu */}
-              <div
-                id="dropdownNavbar"
-                className={`${
-                  dropdownOpen ? "block" : "hidden"
-                } z-10 font-normal bg-white divide-y divide-gray-200 rounded-lg shadow-sm w-44 absolute top-full left-0`}
-              >
-                <ul
-                  className="py-2 text-sm text-gray-700"
-                  aria-labelledby="dropdownLargeButton"
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  className="block text-gray-700 hover:text-gray-900"
                 >
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-gray-900"
-                    >
-                      Hair Transplant
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-gray-900"
-                    >
-                      Hair Treatment
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-gray-900"
-                    >
-                      Skin Treatment
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:text-gray-900"
-                    >
-                      Consultation
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            {/* Contact */}
-            <li>
-              <a
-                href="#contact"
-                className="block py-2 px-3 text-gray-700 hover:text-gray-900 rounded-sm md:p-0"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
+                  Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  className="block text-gray-700 hover:text-gray-900"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
-    </nav>
-
-
-    </div>
-  </div>
-      </header> 
+    </header>
 
 
       
@@ -747,7 +637,7 @@ function App() {
               </div>
 
               {/* Second Column */}
-              <div className="flex-1 ml-0 text-center">
+              <div className="flex-1 ml-0 text-left">
                 <div className="text-lg font-semibold">Why Choose Us</div>
                 <br />
                 <h3 className="text-2xl font-bold">Why Clients Choose Our Clinic</h3>
