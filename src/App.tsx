@@ -186,7 +186,7 @@ function App() {
           <div className="flex items-center space-x-2">
             <Sparkles className="w-8 h-8 text-purple-600" />
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Trichoderm Clinic
+              <a href="#home">Trichoderm Clinic</a>
             </span>
           </div>
 
@@ -221,7 +221,7 @@ function App() {
           <nav
             className={`${
               menuOpen ? "block" : "hidden"
-            } absolute top-full left-0 w-full bg-white z-50 md:static md:block md:w-auto`}
+            } absolute top-full left-0 w-screen bg-white z-50 md:static md:block md:w-auto`}
             id="navbar-dropdown"
           >
             <ul className="flex flex-col p-4 space-y-4 md:space-y-0 md:flex-row md:space-x-8">
