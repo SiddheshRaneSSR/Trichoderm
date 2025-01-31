@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import './app.css';
@@ -89,17 +89,17 @@ function App() {
   };
   
 
-    const scrollCarousel = (direction: string) => {
-      const container = document.getElementById('carousel');
-      if (container) {  // Check if the container is not null
-        const scrollAmount = container.scrollWidth / 4; // Adjust scroll amount
-        if (direction === 'left') {
-          container.scrollLeft -= scrollAmount;
-        } else {
-          container.scrollLeft += scrollAmount;
-        }
-      }
-    };
+    // const scrollCarousel = (direction: string) => {
+    //   const container = document.getElementById('carousel');
+    //   if (container) {  // Check if the container is not null
+    //     const scrollAmount = container.scrollWidth / 4; // Adjust scroll amount
+    //     if (direction === 'left') {
+    //       container.scrollLeft -= scrollAmount;
+    //     } else {
+    //       container.scrollLeft += scrollAmount;
+    //     }
+    //   }
+    // };
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -174,13 +174,83 @@ function App() {
 
 
     // }
+
+
+    // const [items, setItems] = useState([
+    //   { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg', text: 'Cleaning' },
+    //   { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/08-1-1.jpg', text: 'Acne Scanning' },
+    //   { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg', text: 'Face perfection' },
+    //   { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg', text: 'Hair Treatment' },
+    //   { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg', text: 'Hair moisturizing' },
+    // ]);
+  
+    const carouselRef = useRef() as MutableRefObject<HTMLDivElement>;
+  
+    // Scroll the carousel in either direction
+    const scrollCarousel = (direction: string) => {
+      const container = carouselRef.current;
+      const scrollAmount = 300; // Adjust this as needed
+      
+      if (direction === 'left') {
+        container.scrollLeft -= scrollAmount;
+      } else {
+        container.scrollLeft += scrollAmount;
+      }
+    };
+  
+    // Function to detect when to reset scroll position to create infinite effect
+    // const handleInfiniteScroll = () => {
+    //   const container = carouselRef.current;
+      
+    //   if (container.scrollLeft + container.offsetWidth >= container.scrollWidth) {
+    //     // Reset scroll position to simulate infinite scroll
+    //     container.scrollLeft = 0;
+    //   }
+    // };
+  
+    // useEffect(() => {
+    //   const container = carouselRef.current;
+    //   container.addEventListener('scroll', handleInfiniteScroll);
+  
+    //   return () => {
+    //     container.removeEventListener('scroll', handleInfiniteScroll);
+    //   };
+    // }, []);
+
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [items, setItems] = useState([
+      { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg', text: 'Cleaning' },
+      { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/08-1-1.jpg', text: 'Acne Scanning' },
+      { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg', text: 'Face perfection' },
+      { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg', text: 'Hair Treatment' },
+      { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg', text: 'Hair moisturizing' },
+    ]);
+  
+    useEffect(() => {
+      const scrollContainer = scrollContainerRef.current;
+  
+      if (!scrollContainer) return;
+  
+      const handleScroll = () => {
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+          // When scrolled to the end, reset the scroll position to the beginning
+          scrollContainer.scrollLeft = 0;
+        }
+      };
+  
+      scrollContainer.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      };
+    }, [])
  
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-md fixed w-full z-50">
-      <div className="containermx-auto max-w-7xl  px-6 py-3.5 sm:px-6 lg:px-8">
+      <div className="containermx-auto max-w-7xl  px-6 py-2 sm:px-6 lg:px-6">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
           <div className="flex items-center space-x-2">
@@ -301,64 +371,58 @@ function App() {
 
 
       {/* Improve look section */}
-      <section className='bg-white'>
-      <div className="w-full py-8">
+       <section className="bg-white">
+       
+        <div className="overflow-x-hidden bg-gray-100 py-8">
+        <div className="w-full py-8">
         <h2 className="text-3xl font-bold text-center mb-6">Improve looks</h2>
         <h4 className="text-3xl font-bold text-center mb-6">Discover the new you</h4>
 
-        <div className="relative flex items-center justify-center">
-          
-          
-
-          <button type="button" onClick={() => scrollCarousel('left')} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span className="sr-only">Previous</span>
-        </span>
-    </button>
-
-          <div
-            id="carousel"
-            className="flex space-x-4 overflow-x-hidden scrollbar-hide px-6"
-          >
-            {[
-              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg', text: 'Cleaning' },
-              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/08-1-1.jpg', text: 'Acne Scanning' },
-              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg', text: 'Face perfection' },
-              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg', text: 'Hair Treatment' },
-              { src: 'https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg', text: 'Hair moisturizing' },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="imgcontainer min-w-[300px] flex flex-col items-center bg-white shadow-lg rounded-lg"
-              >
-                <img
-                  src={item.src}
-                  alt={`Image ${index + 1}`}
-                  className="rounded-t-lg w-full object-cover h-78"
-                />
-                <div className="imgcentered p-4 text-center text-sm font-medium text-white-700">
-                  {item.text}
-                </div>
+        <div className="overflow-x-hidden bg-gray-100 py-8">
+        <div
+          ref={scrollContainerRef}
+          className="flex space-x-4 overflow-x-auto scrollbar-hide"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-64 h-80 bg-white rounded-lg shadow-md overflow-hidden relative"
+            >
+              <img
+                src={item.src}
+                alt={item.text}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center py-2">
+                {item.text}
               </div>
-            ))}
-          </div>
-
-          
-
-          <button type="button" onClick={() => scrollCarousel('right')} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span className="sr-only">Next</span>
-        </span>
-    </button>
+            </div>
+          ))}
+          {/* Duplicate items to create the infinite scroll effect */}
+          {items.map((item, index) => (
+            <div
+              key={`duplicate-${index}`}
+              className="flex-shrink-0 w-64 h-80 bg-white rounded-lg shadow-md overflow-hidden relative"
+            >
+              <img
+                src={item.src}
+                alt={item.text}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center py-2">
+                {item.text}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+      </div>
+      </div>
+    </section> 
+
+
+
          
 
 
@@ -388,109 +452,102 @@ function App() {
       </section> 
 
 
-      {/* Expirience Statistics */}
-      <div className="bg-white  flex justify-around algin-items:center text-grey-50 text-xl">
+      {/* Experience Statistics */}
+      <div className="bg-white w-full flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center text-gray-700 text-xl p-6">
+  <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
+    2501 <br />
+    <hr className="h-px my-3 bg-blue-200 hover-line" />
+    Non-Surgical
+  </div>
+  <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
+    2501 <br />
+    <hr className="h-px my-3 bg-blue-200 hover-line" />
+    Hair Transplant
+  </div>
+  <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
+    2501 <br />
+    <hr className="h-px my-3 bg-blue-200 hover-line" />
+    Hair Treatment
+  </div>
+  <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
+    2501 <br />
+    <hr className="h-px my-3 bg-blue-200 hover-line" />
+    Consultation
+  </div>
+</div>
 
-    <div className="ml-60 mt-10 hover-div ">
-      2501 <br></br>
-      <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
 
-       Non-Surgical
-    </div>
-    <div className=" mt-10 mb-10  hover-div ">
-      2501 <br></br>
-            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
- 
-      Hair Trasnplant
-    </div>
-    <div className=" mt-10 mb-10  hover-div ">
-      2501 <br></br>
-            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
-
-      Hair Treatment
-    </div>
-    <div className="mr-60 mt-10 mb-10  hover-div ">
-      2501 <br></br> 
-            <hr className="h-px my-3 bg-blue-200 hover-line"></hr>
-
-      Consultation
-    </div>
-
-      </div>
 
   
 
       
       {/*How it works- Steps */}
-    <section className="flex flex-row items-center gap-8 p-8 bg-gray-50">
-    {/* Left Section: Text and Boxes */}
-    <div className="w-1/2 space-y-6">
-    {/* Headings */}
-    <div>
+      <section id="how-it-works" className="py-20 bg-gray-50">
+  <div className="container mx-auto px-6">
+    {/* Heading */}
+    <div className="text-center mb-12">
       <h2 className="text-3xl font-bold">How It Works</h2>
-      <h3 className="text-xl text-gray-600">Simple Step to Get Beautiful Skin</h3>
-    </div>
-    {/* Steps */}
-    <div className="space-y-4" >
-      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
-        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">1</span>
-        <div>
-          <h4 className="font-semibold">Make A Decision</h4>
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        </div>
-      </div>
-      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
-        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">2</span>
-        <div>
-          <h4 className="font-semibold">Schedule An Appointment</h4>
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        </div>
-      </div>
-      <div className="flex items-start gap-4 p-4 bg-white rounded-lg" id='steps'>
-        <span className="flex items-center justify-center w-8 h-8 text-white bg-[#9333EA] rounded-full">3</span>
-        <div>
-          <h4 className="font-semibold">Transformation Completed</h4>
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        </div>
-      </div>
-    </div>
+      <h3 className="text-xl text-gray-600">Simple Steps to Get Beautiful Skin</h3>
     </div>
 
-    {/* Right Section: Images */}
-    <div className="relative w-1/2">
-    <div className="absolute -top-8 left-10 text-pink-500 font-semibold">
-    <img
-        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-03.png"
-        alt="Background"
-        className="absolute top-0 left-0 w-full h-auto -z-10"
-      />
+    {/* Content Grid */}
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* Left: Steps Section */}
+      <div className="space-y-6">
+        {[
+          { title: "Make A Decision", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+          { title: "Schedule An Appointment", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+          { title: "Transformation Completed", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        ].map((step, index) => (
+          <div
+            key={index}
+            className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-start gap-4"
+          >
+            <span className="flex items-center justify-center w-10 h-10 min-w-10 min-h-10 text-white bg-purple-300 rounded-full text-lg font-semibold">
+              {index + 1}
+            </span>
+            <div>
+              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+              <p className="text-gray-600">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Right: Image Section */}
+      <div className="relative">
+        {/* Background Decoration */}
+        <img
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-03.png"
+          alt="Decorative Background"
+          className="absolute -top-8 left-10 w-3/4 opacity-80 -z-10"
+        />
+        {/* Main Image */}
+        <div className="relative">
+          <img
+            src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img02.jpg"
+            alt="Background"
+            className="absolute top-0 left-0 w-full h-auto -z-10"
+          />
+          <img
+            src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img01.jpg"
+            alt="Main"
+            className="w-4/5 ml-auto rounded-xl shadow-lg"
+          />
+          <img
+            src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-06.png"
+            alt="Overlay"
+            className="absolute bottom-0 left-100 w-1/3"
+            id="leaf"
+          />
+        </div>
+      </div>
     </div>
-    <div className="relative">
-      <img
-        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img02.jpg"
-        alt="Background"
-        className="absolute top-0 left-0 w-full h-auto -z-10"
-      />
-      <img
-        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img01.jpg"
-        alt="Main"
-        className="w-4/5 ml-auto"
-      />
-      <img
-        src="https://cura.radiantthemes.com/wp-content/uploads/2020/06/img-06.png"
-        alt="Overlay"
-        className="absolute bottom-0 left-100 w-1/3" 
-        id="leaf"
-      />
-    </div>
-    </div>
-    </section>
+  </div>
+</section>
+
+
+
 
       
       
@@ -620,142 +677,139 @@ function App() {
       )}
 
       {/* Book appointment*/}
-      <div className="flex justify-around items-center space-x-6">
+      <section id="why-choose-us" className="py-20 bg-gray-50 m-10">
+  <div className="grid mx-auto px-6">
+    {/* Heading */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl font-bold">Why Choose Us</h2>
+      <h3 className="text-xl text-gray-600">Why Clients Choose Our Clinic</h3>
+    </div>
 
-        <div className='flex justify-around items-center space-x-6 m-40'>
-           {/* First Column */}
-              <div className="flex-1 ml-20 mr-0">
-                <img
-                  src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/2.png"
-                  alt="exp image"
-                  className="mb-4"
-                />
-                <img
-                  src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/call-our-clinic.png"
-                  alt="call our clinic"
-                />
-              </div>
+    {/* Content Grid: Side by Side */}
+    <div className="grid md:grid-cols-3 gap-12 items-center">
+      {/* Left: Images Section */}
+      <div className="flex flex-col items-center md:items-start">
+        <img
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/2.png"
+          alt="Experience Image"
+          className="w-4/5 mb-6"
+        />
+        <img
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/call-our-clinic.png"
+          alt="Call Our Clinic"
+          className="w-2/5 "
+        />
+      </div>
 
-              {/* Second Column */}
-              <div className="flex-1 ml-0 text-left">
-                <div className="text-lg font-semibold">Why Choose Us</div>
-                <br />
-                <h3 className="text-2xl font-bold">Why Clients Choose Our Clinic</h3>
-                <p className="mt-2 text-gray-600">
-                  Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation. ullamco laboris nisi ut aliquip ex ea commodo.
-                </p>
-                <br />
-                <p className="text-gray-600">
-                  Consequat auteirure dolor in reprehenderit in voluptate velit esse cillum dolore.
-                </p>
-              </div>
-
-              {/* Third Column */}
-              <div className="flex-1  mr-30">
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Enter your name"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="serviceType"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Service Type
-                    </label>
-                    <select
-                      id="serviceType"
-                      name="serviceType"
-                      required
-                      value={formData.serviceType}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                      <option value="">Select a service</option>
-                      {serviceTypes.map((service) => (
-                        <option key={service} value={service}>
-                          {service}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Tell us about your concerns..."
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full py-3 px-4 rounded-md text-white font-medium transition-colors ${
-                      isSubmitting
-                        ? 'bg-purple-400 cursor-not-allowed'
-                        : 'bg-purple-600 hover:bg-purple-700'
-                    }`}
-                  >
-                    {isSubmitting ? 'Submitting...' : 'Submit'}
-                  </button>
-                  {submitStatus === 'success' && (
-                    <p className="text-green-600 text-center">
-                      Thank you! We'll contact you soon.
-                    </p>
-                  )}
-                  {submitStatus === 'error' && (
-                    <p className="text-red-600 text-center">
-                      Something went wrong. Please try again.
-                    </p>
-                  )}
-                </form>
-              </div>
-            </div>
+      {/* Right: Text + Form Section */}
+        {/* Text Section */}
+        <div className="flex flex-col items-center md:items-start">
+          <p className="text-lg font-semibold text-purple-600">Why Choose Us</p>
+          <h3 className="text-2xl font-bold">Why Clients Choose Our Clinic</h3>
+          <p className="mt-2 text-gray-600">
+            Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+          </p>
+          <p className="mt-2 text-gray-600">
+            Consequat auteirure dolor in reprehenderit in voluptate velit esse cillum dolore.
+          </p>
         </div>
+
+        {/* Form Section */}
+        <form onSubmit={handleSubmit} className="space-y-4 rounded-xl shadow-lg p-5">
+         <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div>
+            <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-1">
+              Service Type
+            </label>
+            <select
+              id="serviceType"
+              name="serviceType"
+              required
+              value={formData.serviceType}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              <option value="">Select a service</option>
+              {serviceTypes.map((service) => (
+                <option key={service} value={service}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              value={formData.message}
+              onChange={handleInputChange}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Tell us about your concerns..."
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3 px-4 rounded-md text-white font-medium transition-colors ${
+              isSubmitting ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'
+            }`}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </button>
+          {submitStatus === 'success' && (
+            <p className="text-green-600 text-center">
+              Thank you! We'll contact you soon.
+            </p>
+          )}
+          {submitStatus === 'error' && (
+            <p className="text-red-600 text-center">
+              Something went wrong. Please try again.
+            </p>
+          )}
+        </form>
+    </div>
+  </div>
+</section>
+
+
+
+ 
+
  
 
 
