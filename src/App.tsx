@@ -679,11 +679,6 @@ function App() {
       {/* Book appointment*/}
       <section id="why-choose-us" className="py-20 bg-gray-50 m-10">
   <div className="grid mx-auto px-6">
-    {/* Heading */}
-    <div className="text-center mb-12">
-      <h2 className="text-3xl font-bold">Why Choose Us</h2>
-      <h3 className="text-xl text-gray-600">Why Clients Choose Our Clinic</h3>
-    </div>
 
     {/* Content Grid: Side by Side */}
     <div className="grid md:grid-cols-3 gap-12 items-center">
