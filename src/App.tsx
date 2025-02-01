@@ -495,9 +495,9 @@ function App() {
       {/* Left: Steps Section */}
       <div className="space-y-6">
         {[
-          { title: "Make A Decision", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-          { title: "Schedule An Appointment", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-          { title: "Transformation Completed", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+          { title: "Make A Decision", desc: "Define your goals and explore our expert solutions tailored to your needs. We\’re here to guide you every step of the way." },
+          { title: "Schedule An Appointment", desc: "Book a free consultation at your convenience. Our experts provide insights and a clear roadmap to achieve your transformation." },
+          { title: "Transformation Completed", desc: "Experience seamless service and lasting results. Join countless satisfied clients who have successfully transformed with us!" },
         ].map((step, index) => (
           <div
             key={index}
@@ -707,11 +707,7 @@ function App() {
           <p className="text-lg font-semibold text-purple-600">Why Choose Us</p>
           <h3 className="text-2xl font-bold">Why Clients Choose Our Clinic</h3>
           <p className="mt-2 text-gray-600">
-            Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-          </p>
-          <p className="mt-2 text-gray-600">
-            Consequat auteirure dolor in reprehenderit in voluptate velit esse cillum dolore.
+          At our clinic, we combine expertise with personalized care to deliver exceptional results. With advanced treatments, experienced specialists, and a client-first approach, we ensure a seamless and comfortable experience. From consultation to transformation, we prioritize your well-being, making us a trusted choice for thousands seeking quality care.
           </p>
         </div>
 
