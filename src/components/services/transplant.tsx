@@ -1,6 +1,8 @@
 import React from "react";
 import { FaCheckCircle, FaCalendarAlt, FaUserMd, FaRegSmileBeam } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import HTL from '../../public/images/HTL.jpeg'
+import HTR from '../../public/images/HTR.jpeg'
 
 const Transplant = () => {
   return (
@@ -61,17 +63,17 @@ const Transplant = () => {
     <div className="grid md:grid-cols-2 gap-6">
       <div className="flex flex-col items-center">
         <img 
-          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg" 
+          src={HTL} 
           alt="Before Transplant" 
-          className="rounded-lg shadow-lg"
+          className="max-w-[400px] max-h-[400px] rounded-lg shadow-lg"
         />
         <p className="mt-3 text-gray-700">Before</p>
       </div>
       <div className="flex flex-col items-center">
         <img 
-          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg" 
+          src={HTR} 
           alt="After Transplant" 
-          className="rounded-lg shadow-lg"
+          className="max-w-[400px] max-h-[400px] rounded-lg shadow-lg"
         />
         <p className="mt-3 text-gray-700">After</p>
       </div>
@@ -84,7 +86,7 @@ const Transplant = () => {
       <section className="bg-grey-50 text-white py-16">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Ready for Your Hair Transformation?</h2>
-          <p className="text-lg mb-6">Schedule a **FREE consultation** with our hair transplant specialists today!</p>
+          <p className="text-lg mb-6">Schedule a consultation with our hair transplant specialists today!</p>
           
           <div className="flex justify-center space-x-4">
             

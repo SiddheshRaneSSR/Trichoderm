@@ -62,7 +62,6 @@ const Footer = () => {
               <ul className="space-y-2 bg-transparent ">
                 <li><HashLink smooth to="/transplant/#HTheading" className="hover:text-purple-500 transition-colors">Hair Transplant</HashLink></li>
                 <li><HashLink smooth to="/skin/#STheading" className="hover:text-purple-500 transition-colors">Skin Treatment</HashLink></li>
-                <li><Link to="#" className="hover:text-purple-500 transition-colors">Hair Analysis</Link></li>
                 <li><Link to="#" className="hover:text-purple-500 transition-colors">Consultation</Link></li>
               </ul>
             </div>

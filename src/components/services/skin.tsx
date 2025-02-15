@@ -84,8 +84,8 @@ const Skin = () => {
       {/* Call-to-Action (Book Appointment) */}
       <section className="bg-grey-50 text-white py-16">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready for Your Hair Transformation?</h2>
-          <p className="text-lg mb-6">Schedule a **FREE consultation** with our hair transplant specialists today!</p>
+          <h2 className="text-3xl font-bold mb-4">Ready for Your Skin Transformation?</h2>
+          <p className="text-lg mb-6">Schedule a consultation with our Skin treatment specialists today!</p>
           
           <div className="flex justify-center space-x-4">
             
