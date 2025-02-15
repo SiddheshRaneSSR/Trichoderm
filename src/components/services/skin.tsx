@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Skin = () => {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen m-10 pt-10">
       
 
       {/* About Skin Treatment */}
-      <section className="container mx-auto py-16 px-6">
+      <section id="STheading" className="container mx-auto py-16 px-6">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">What is Skin Treatment?</h2>
         <p className="text-gray-600 text-lg text-center mx-auto max-w-3xl">
           Our advanced skin treatments help improve skin health, texture, and appearance. 
@@ -53,32 +53,33 @@ const Skin = () => {
 
       {/* Before & After Section */}
       <section className="bg-white py-16">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Before & After</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-10">
-            Witness the dramatic skin transformations our clients have achieved with our specialized treatments.
-          </p>
+  <div className="container mx-auto text-center">
+    <h2 className="text-3xl font-bold text-gray-800 mb-6">Before & After</h2>
+    <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+      Witness the dramatic skin transformations our clients have achieved with our specialized treatments.
+    </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <img 
-                src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg" 
-                alt="Before Skin Treatment" 
-                className="rounded-lg shadow-lg"
-              />
-              <p className="mt-3 text-gray-700">Before</p>
-            </div>
-            <div>
-              <img 
-                src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg" 
-                alt="After Skin Treatment" 
-                className="rounded-lg shadow-lg"
-              />
-              <p className="mt-3 text-gray-700">After</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="flex flex-col items-center">
+        <img 
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/06-2.jpg" 
+          alt="Before Skin Treatment" 
+          className="rounded-lg shadow-lg"
+        />
+        <p className="mt-3 text-gray-700">Before</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <img 
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/07-2.jpg" 
+          alt="After Skin Treatment" 
+          className="rounded-lg shadow-lg"
+        />
+        <p className="mt-3 text-gray-700">After</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Call-to-Action (Book Appointment) */}
       <section className="bg-grey-50 text-white py-16">

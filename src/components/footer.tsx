@@ -1,13 +1,27 @@
 import { ReactNode } from "react";
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
-
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 
 
 
 
 const Footer = () => {
+
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/Skin");
+    setTimeout(() => {
+      const element = document.getElementById("STheading");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100); // Small delay to allow navigation
+  };
 
     return(
 
@@ -35,10 +49,10 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Explore</h3>
               <ul className="space-y-2 bg-transparent">
-                <li><Link to="/" className="hover:text-purple-500 transition-colors">Home</Link></li>
-                <li><Link to="#about" className="hover:text-purple-500 transition-colors">About</Link></li>
-                <li><Link to="#services" className="hover:text-purple-500 transition-colors">Services</Link></li>
-                <li><Link to="#contact" className="hover:text-purple-500 transition-colors">Contact</Link></li>
+                <li><HashLink smooth to="/" className="hover:text-purple-500 transition-colors">Home</HashLink></li>
+                <li><HashLink smooth to="#about" className="hover:text-purple-500 transition-colors">About</HashLink></li>
+                <li><HashLink smooth to="#services" className="hover:text-purple-500 transition-colors">Services</HashLink></li>
+                <li><HashLink smooth to="#contact" className="hover:text-purple-500 transition-colors">Contact</HashLink></li>
               </ul>
             </div>
 
@@ -46,8 +60,8 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Services</h3>
               <ul className="space-y-2 bg-transparent ">
-                <li><Link to="/Transplant" className="hover:text-purple-500 transition-colors">Hair Transplant</Link></li>
-                <li><Link to="/Skin" className="hover:text-purple-500 transition-colors">Skin Treatment</Link></li>
+                <li><HashLink smooth to="/transplant/#HTheading" className="hover:text-purple-500 transition-colors">Hair Transplant</HashLink></li>
+                <li><HashLink smooth to="/skin/#STheading" className="hover:text-purple-500 transition-colors">Skin Treatment</HashLink></li>
                 <li><Link to="#" className="hover:text-purple-500 transition-colors">Hair Analysis</Link></li>
                 <li><Link to="#" className="hover:text-purple-500 transition-colors">Consultation</Link></li>
               </ul>

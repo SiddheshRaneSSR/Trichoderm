@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Transplant = () => {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen m-10 pt-10">
       
 
       {/* About Hair Transplant */}
-      <section className="container mx-auto py-16 px-6 mb-6">
+      <section id="HTheading" className="container mx-auto py-16 px-6 mb-6">
         <h2 className="text-3xl font-bold text-center text-gray-800 m-8">What is Hair Transplant?</h2>
         <p className="text-gray-600 text-lg text-center mx-auto max-w-3xl">
           A hair transplant is a procedure in which a dermatologist  moves hair from a donor area to a bald or thinning part of the scalp. 
@@ -52,32 +52,33 @@ const Transplant = () => {
 
       {/* Before & After Section */}
       <section className="bg-white py-16 m-10">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Before & After</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-10">
-            See the amazing transformation of our patients after undergoing our hair transplant procedure.
-          </p>
+  <div className="container mx-auto text-center">
+    <h2 className="text-3xl font-bold text-gray-800 mb-6">Before & After</h2>
+    <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+      See the amazing transformation of our patients after undergoing our hair transplant procedure.
+    </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <img 
-                src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg" 
-                alt="Before Transplant" 
-                className="rounded-lg shadow-lg"
-              />
-              <p className="mt-3 text-gray-700">Before</p>
-            </div>
-            <div>
-              <img 
-                src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg" 
-                alt="After Transplant" 
-                className="rounded-lg shadow-lg"
-              />
-              <p className="mt-3 text-gray-700">After</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="flex flex-col items-center">
+        <img 
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/20-1.jpg" 
+          alt="Before Transplant" 
+          className="rounded-lg shadow-lg"
+        />
+        <p className="mt-3 text-gray-700">Before</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <img 
+          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/21-1.jpg" 
+          alt="After Transplant" 
+          className="rounded-lg shadow-lg"
+        />
+        <p className="mt-3 text-gray-700">After</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Call-to-Action (Book Appointment) */}
       <section className="bg-grey-50 text-white py-16">
