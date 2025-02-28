@@ -6,7 +6,7 @@ import HTR from '../../public/images/HTR.jpeg'
 
 const Transplant = () => {
   return (
-    <div className="bg-gray-50 min-h-screen m-10 pt-10">
+    <div className="bg-gray-50 min-h-screen pt-[80px]">
       
 
       {/* About Hair Transplant */}

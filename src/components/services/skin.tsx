@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Skin = () => {
   return (
-    <div className="bg-gray-50 min-h-screen m-10 pt-10">
+    <div className="bg-gray-50 min-h-screen pt-[80px]">
       
 
       {/* About Skin Treatment */}

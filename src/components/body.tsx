@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import '../app.css';
+import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 const Body = () => {
 
@@ -16,16 +18,19 @@ const Body = () => {
         title: 'Hair Treatment',
         description: 'Advanced hair care solutions for all types of hair problems',
         icon: <Scissors className="w-6 h-6" />,
+        link: "/transplant#HTheading",
       },
       {
         title: 'Hair Transplant',
         description: 'State-of-the-art hair transplant procedures with natural results',
         icon: <Heart className="w-6 h-6" />,
+        link: "/transplant#HTheading",
       },
       {
         title: 'Skin Treatment',
         description: 'Comprehensive skincare solutions for radiant, healthy skin',
         icon: <Sparkles className="w-6 h-6" />,
+        link: "/skin#STheading",
       },
     ];
     
@@ -345,26 +350,27 @@ const Body = () => {
 
 
 
-     {/* Services Section */}
-     <section id="services" className="py-20 bg-gray-50">
-       <div className="container mx-auto px-6">
-         <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
-         <div className="grid md:grid-cols-3 gap-8">
-           {services.map((service, index) => (
-             <div
-               key={index}
-               className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-             >
-               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                 {service.icon}
-               </div>
-               <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-               <p className="text-gray-600">{service.description}</p>
-             </div>
-           ))}
-         </div>
-       </div>
-     </section> 
+   <section id="services" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-6">
+        <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <HashLink 
+              smooth
+              to={service.link} // ✅ Navigate to the correct section
+              key={index}
+              className="block bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+            >
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              <p className="text-gray-600">{service.description}</p>
+            </HashLink>
+          ))}
+        </div>
+      </div>
+    </section>
 
 
       {/* Experience Statistics */}
