@@ -102,7 +102,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-800">
           <div className="container mx-auto px-6 py-4">
-            <p className="text-center text-gray-400">&copy; 2024 Trichoderm Centre. All rights reserved.</p>
+            <p className="text-center text-gray-400">&copy; 2025 Trichoderm Centre. All rights reserved.</p>
           </div>
         </div>
       </footer>

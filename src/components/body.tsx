@@ -4,7 +4,7 @@ import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import '../app.css';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-
+import call from './../public/images/call.png'
 const Body = () => {
 
     const images = [
@@ -376,22 +376,22 @@ const Body = () => {
       {/* Experience Statistics */}
       <div className="bg-white w-full flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center text-gray-700 text-xl p-6">
   <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
-    2501 <br />
+    1226 <br />
     <hr className="h-px my-3 bg-blue-200 hover-line" />
     Non-Surgical
   </div>
   <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
-    2501 <br />
+    358 <br />
     <hr className="h-px my-3 bg-blue-200 hover-line" />
     Hair Transplant
   </div>
   <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
-    2501 <br />
+    1532 <br />
     <hr className="h-px my-3 bg-blue-200 hover-line" />
     Hair Treatment
   </div>
   <div className="hover-div text-center w-full sm:w-1/2 md:w-auto px-4">
-    2501 <br />
+    2664 <br />
     <hr className="h-px my-3 bg-blue-200 hover-line" />
     Consultation
   </div>
@@ -611,9 +611,9 @@ const Body = () => {
           className="w-4/5 mb-6"
         />
         <img
-          src="https://cura.radiantthemes.com/wp-content/uploads/2020/07/call-our-clinic.png"
+          src={call}
           alt="Call Our Clinic"
-          className="w-2/5 "
+          className="w-2/5 w-[350px] h-[50px]"
         />
       </div>
 
