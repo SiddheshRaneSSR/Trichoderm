@@ -3,6 +3,7 @@ import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
+import Flogo from '../public/images/Flogo.png';
 
 
 
@@ -30,7 +31,14 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-white">Trichoderm Centre</h3>
+              {/** <h3 className="text-xl font-semibold text-white">Trichoderm Centre</h3>*/}
+              <div className="flex items-center space-x-2">
+                <img 
+                src={Flogo} 
+                alt="Trichoderm logo"
+                className="w-[300px] h-[50px] rounded-lg ml-0"
+              />
+              </div>
               <p className="text-gray-400">Your trusted partner in hair transplant and skin treatment solutions.</p>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/no1dermadoc/" className="hover:text-purple-500 transition-colors">

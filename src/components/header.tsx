@@ -2,7 +2,7 @@ import React, { MutableRefObject, ReactNode, useEffect, useRef, useState } from 
 import { MdAutoAwesome as Sparkles } from 'react-icons/md';
 import { Navigate, useNavigate } from "react-router-dom";
 import { FaCut as Scissors, FaHeart as Heart, FaClock as Clock, FaStar as Star, FaUsers as Users, FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin, FaMapMarkerAlt as MapPin, FaPhone as Phone, FaEnvelope as Mail, FaTimes as X } from 'react-icons/fa';
-
+import logo from '../public/images/logo.png';
 
 
 
@@ -217,11 +217,20 @@ const Header = () => {
           <div className="containermx-auto max-w-7xl  px-6 py-2 sm:px-6 lg:px-6">
             <div className="flex items-center justify-between">
               {/* Logo Section */}
+              {/*
               <div className="flex items-center space-x-2">
                 <Sparkles className="w-8 h-8 text-purple-600" />
                 <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                   <a href="/">Trichoderm Clinic</a>
                 </span>
+              </div>
+              */}
+              <div className="flex items-center space-x-2">
+                <img 
+                src={logo} 
+                alt="Trichoderm logo"
+                className="max-w-[400px] max-h-[400px] rounded-lg"
+              />
               </div>
     
               {/* Hamburger Menu Button */}
